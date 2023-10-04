@@ -1,18 +1,29 @@
 import React, { useState } from 'react';
-import { View, TextInput, Text, Switch } from 'react-native';
-import { commonStyles } from '../styles/commonStyles';
+import { View, TextInput, Text, Alert } from 'react-native';
 import ButtonComponent from '../components/ButtonComponent';
+import DropdownPicker from '../components/DropdownPicker';
+import { commonStyles } from '../styles/commonStyles';
 
 const EditExpense = ({ route }) => {
   const { item } = route.params;
 
   const [name, setName] = useState(item.name);
   const [price, setPrice] = useState(String(item.price));
-  const [isOverbudget, setIsOverbudget] = useState(price > 500);
+  const [quantity, setQuantity] = useState(String(item.quantity));
 
   const handleSave = () => {
-    // Logic for updating the item goes here
-    console.log(name, price, isOverbudget);
+    if (!name || !price) {
+      Alert.alert('Error', 'Please fill out all fields.');
+      return;
+    }
+
+    if (isNaN(price) || price <= 0) {
+      Alert.alert('Error', 'Enter a valid price.');
+      return;
+    }
+
+    console.log(name, price, quantity);
+    // Logic to update the data would be placed here
   };
 
   return (
@@ -30,12 +41,18 @@ const EditExpense = ({ route }) => {
         placeholder="Enter price"
         keyboardType="numeric"
       />
-      <Text>Overbudget:</Text>
-      <Switch
-        value={isOverbudget}
-        onValueChange={setIsOverbudget}
+      <Text>Quantity:</Text>
+      <DropdownPicker 
+        selectedValue={quantity}
+        onValueChange={(value) => setQuantity(value)}
+        items={[
+          { label: '1', value: '1' },
+          { label: '2', value: '2' },
+          { label: '3', value: '3' },
+          // ... you can expand this list
+        ]}
       />
-      <ButtonComponent title="Save" onPress={handleSave} />
+      <ButtonComponent title="Update" onPress={handleSave} />
     </View>
   );
 };
