@@ -28,7 +28,6 @@ const EditExpense = ({ route }) => {
     }
 
     console.log(name, price, quantity);
-    // Logic to update the data would be placed here
   };
 
   return (
