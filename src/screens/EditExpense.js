@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, TextInput, Text, Alert } from 'react-native';
 import ButtonComponent from '../components/ButtonComponent';
 import DropdownPicker from '../components/DropdownPicker';
-import { commonStyles } from '../styles/commonStyles';
+import { isValidString, isValidNumber } from '../utils/validation';
 
 const EditExpense = ({ route }) => {
   const { item } = route.params;
@@ -12,13 +12,18 @@ const EditExpense = ({ route }) => {
   const [quantity, setQuantity] = useState(String(item.quantity));
 
   const handleSave = () => {
-    if (!name || !price) {
-      Alert.alert('Error', 'Please fill out all fields.');
+    if (!isValidString(name)) {
+      Alert.alert('Error', 'Please provide a valid item name.');
       return;
     }
 
-    if (isNaN(price) || price <= 0) {
-      Alert.alert('Error', 'Enter a valid price.');
+    if (!isValidNumber(price)) {
+      Alert.alert('Error', 'Please provide a valid price.');
+      return;
+    }
+
+    if (!isValidNumber(quantity)) {
+      Alert.alert('Error', 'Please provide a valid quantity.');
       return;
     }
 
