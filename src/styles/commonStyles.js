@@ -3,9 +3,10 @@ import { StyleSheet } from "react-native";
 export const commonStyles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: "flex-start",
+    alignItems: "stretch",
     backgroundColor: "#f7f7f7",
+    paddingTop: 10,
   },
   button: {
     margin: 10,

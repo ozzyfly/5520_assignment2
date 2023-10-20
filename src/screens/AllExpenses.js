@@ -8,10 +8,19 @@ import { listenToExpensesUpdates } from "../utils/firestoreHelper";
 const AllExpenses = ({ navigation }) => {
   const [expenses, setExpenses] = useState([]);
 
+  const BUDGET_LIMIT = 500; // you can adjust this value based on your needs
+
   useEffect(() => {
     const unsubscribe = listenToExpensesUpdates(
       (updatedExpenses) => {
-        setExpenses(updatedExpenses);
+        const computedExpenses = updatedExpenses.map((expense) => {
+          const totalCost = expense.quantity * expense.price;
+          return {
+            ...expense,
+            isOverBudget: totalCost > BUDGET_LIMIT,
+          };
+        });
+        setExpenses(computedExpenses);
       },
       (error) => {
         console.error("Error fetching expenses:", error);
