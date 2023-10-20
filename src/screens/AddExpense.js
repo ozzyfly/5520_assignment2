@@ -4,7 +4,7 @@ import ButtonComponent from "../components/ButtonComponent";
 import { isValidString, isValidNumber } from "../utils/validation";
 import { addNewExpense } from "../utils/firestoreHelper";
 import { commonStyles } from "../styles/commonStyles";
-import StepperInput from "../components/StepperInput";
+import DropDownPicker from "react-native-dropdown-picker";
 
 const AddExpense = () => {
   const [name, setName] = useState("");
@@ -62,14 +62,20 @@ const AddExpense = () => {
         style={styles.input}
       />
       <Text style={styles.label}>Quantity:</Text>
-      <StepperInput
-        value={quantity}
-        onIncrement={() =>
-          setQuantity((prev) => (parseInt(prev, 10) + 1).toString())
-        }
-        onDecrement={() =>
-          setQuantity((prev) => (parseInt(prev, 10) - 1).toString())
-        }
+      {/* Dropdown Picker for Quantity */}
+      <DropDownPicker
+        items={[
+          { label: "1", value: "1" },
+          { label: "2", value: "2" },
+          { label: "3", value: "3" },
+          // Add more options as needed
+        ]}
+        defaultValue={quantity}
+        containerStyle={styles.dropdownContainer}
+        style={styles.dropdown}
+        itemStyle={styles.dropdownItem}
+        dropDownStyle={styles.dropdownList}
+        onChangeItem={(item) => setQuantity(item.value)}
       />
       <ButtonComponent title="Save" onPress={handleSave} />
     </View>
@@ -87,6 +93,21 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     marginBottom: 15,
+  },
+  dropdownContainer: {
+    height: 40,
+    marginBottom: 15,
+  },
+  dropdown: {
+    backgroundColor: "white",
+    borderColor: "gray",
+    borderWidth: 1,
+  },
+  dropdownItem: {
+    justifyContent: "flex-start",
+  },
+  dropdownList: {
+    backgroundColor: "white",
   },
 });
 
