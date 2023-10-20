@@ -1,16 +1,22 @@
-export const commonStyles = {
+import { StyleSheet } from "react-native";
+
+export const commonStyles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 15,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f7f7f7",
   },
   button: {
-    backgroundColor: '#3498db',
+    margin: 10,
     padding: 10,
+    backgroundColor: "#3498db",
     borderRadius: 5,
-    alignItems: 'center',
   },
   buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "white",
+    textAlign: "center",
   },
-};
+});
