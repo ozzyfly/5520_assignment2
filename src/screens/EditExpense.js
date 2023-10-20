@@ -1,33 +1,47 @@
-import React, { useState } from 'react';
-import { View, TextInput, Text, Alert } from 'react-native';
-import ButtonComponent from '../components/ButtonComponent';
-import DropdownPicker from '../components/DropdownPicker';
-import { isValidString, isValidNumber } from '../utils/validation';
+import React, { useState } from "react";
+import { View, TextInput, Text, Alert } from "react-native";
+import ButtonComponent from "../components/ButtonComponent";
+import { isValidString, isValidNumber } from "../utils/validation";
+import { updateExpense } from "../utils/firestoreHelper";
+import StepperInput from "../components/StepperInput";
+import { commonStyles } from "../styles/commonStyles";
 
-const EditExpense = ({ route }) => {
+const EditExpense = ({ route, navigation }) => {
   const { item } = route.params;
 
   const [name, setName] = useState(item.name);
   const [price, setPrice] = useState(String(item.price));
-  const [quantity, setQuantity] = useState(String(item.quantity));
+  const [quantity, setQuantity] = useState(Number(item.quantity));
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!isValidString(name)) {
-      Alert.alert('Error', 'Please provide a valid item name.');
+      Alert.alert("Error", "Please provide a valid item name.");
       return;
     }
 
     if (!isValidNumber(price)) {
-      Alert.alert('Error', 'Please provide a valid price.');
+      Alert.alert("Error", "Please provide a valid price.");
       return;
     }
 
-    if (!isValidNumber(quantity)) {
-      Alert.alert('Error', 'Please provide a valid quantity.');
+    if (!isValidNumber(String(quantity))) {
+      Alert.alert("Error", "Please provide a valid quantity.");
       return;
     }
 
-    console.log(name, price, quantity);
+    const updatedExpense = {
+      name,
+      price: Number(price),
+      quantity,
+    };
+
+    try {
+      await updateExpense(item.id, updatedExpense);
+      Alert.alert("Success", "Expense updated successfully.");
+      navigation.goBack();
+    } catch (error) {
+      Alert.alert("Error", "Failed to update the expense.");
+    }
   };
 
   return (
@@ -46,15 +60,10 @@ const EditExpense = ({ route }) => {
         keyboardType="numeric"
       />
       <Text>Quantity:</Text>
-      <DropdownPicker 
-        selectedValue={quantity}
-        onValueChange={(value) => setQuantity(value)}
-        items={[
-          { label: '1', value: '1' },
-          { label: '2', value: '2' },
-          { label: '3', value: '3' },
-          // ... you can expand this list
-        ]}
+      <StepperInput
+        value={quantity}
+        onIncrement={() => setQuantity((prev) => prev + 1)}
+        onDecrement={() => setQuantity((prev) => Math.max(1, prev - 1))}
       />
       <ButtonComponent title="Update" onPress={handleSave} />
     </View>

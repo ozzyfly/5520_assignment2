@@ -1,62 +1,93 @@
-import React, { useState } from 'react';
-import { View, TextInput, Text, Alert } from 'react-native';
-import ButtonComponent from '../components/ButtonComponent';
-import DropdownPicker from '../components/DropdownPicker';
-import { isValidString, isValidNumber } from '../utils/validation';
+import React, { useState } from "react";
+import { View, TextInput, Text, Alert, StyleSheet } from "react-native";
+import ButtonComponent from "../components/ButtonComponent";
+import { isValidString, isValidNumber } from "../utils/validation";
+import { addNewExpense } from "../utils/firestoreHelper";
+import { commonStyles } from "../styles/commonStyles";
+import StepperInput from "../components/StepperInput";
 
 const AddExpense = () => {
-  const [name, setName] = useState('');
-  const [price, setPrice] = useState('');
-  const [quantity, setQuantity] = useState('1');
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [quantity, setQuantity] = useState("1");
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!isValidString(name)) {
-      Alert.alert('Error', 'Please provide a valid item name.');
+      Alert.alert("Error", "Please provide a valid item name.");
       return;
     }
 
     if (!isValidNumber(price)) {
-      Alert.alert('Error', 'Please provide a valid price.');
+      Alert.alert("Error", "Please provide a valid price.");
       return;
     }
 
     if (!isValidNumber(quantity)) {
-      Alert.alert('Error', 'Please provide a valid quantity.');
+      Alert.alert("Error", "Please provide a valid quantity.");
       return;
     }
 
-    console.log(name, price, quantity);
+    const expense = {
+      name,
+      price: parseFloat(price).toFixed(2), // Convert string to number and handle floating point issues
+      quantity: parseInt(quantity, 10), // Convert string to integer
+    };
+
+    try {
+      await addNewExpense(expense);
+      Alert.alert("Success", "Expense added successfully!");
+      setName("");
+      setPrice("");
+      setQuantity("1");
+    } catch (error) {
+      Alert.alert("Error", "Failed to add the expense. Please try again.");
+    }
   };
 
   return (
     <View style={commonStyles.container}>
-      <Text>Item Name:</Text>
+      <Text style={styles.label}>Item Name:</Text>
       <TextInput
         value={name}
         onChangeText={setName}
         placeholder="Enter item name"
+        style={styles.input}
       />
-      <Text>Price:</Text>
+      <Text style={styles.label}>Price:</Text>
       <TextInput
         value={price}
         onChangeText={setPrice}
         placeholder="Enter price"
         keyboardType="numeric"
+        style={styles.input}
       />
-      <Text>Quantity:</Text>
-      <DropdownPicker 
-        selectedValue={quantity}
-        onValueChange={(value) => setQuantity(value)}
-        items={[
-          { label: '1', value: '1' },
-          { label: '2', value: '2' },
-          { label: '3', value: '3' },
-          // ... you can expand this list
-        ]}
+      <Text style={styles.label}>Quantity:</Text>
+      <StepperInput
+        value={quantity}
+        onIncrement={() =>
+          setQuantity((prev) => (parseInt(prev, 10) + 1).toString())
+        }
+        onDecrement={() =>
+          setQuantity((prev) => (parseInt(prev, 10) - 1).toString())
+        }
       />
       <ButtonComponent title="Save" onPress={handleSave} />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  label: {
+    marginTop: 10,
+    marginBottom: 5,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "gray",
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 15,
+  },
+});
 
 export default AddExpense;
