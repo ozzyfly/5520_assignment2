@@ -4,12 +4,13 @@ import ButtonComponent from "../components/ButtonComponent";
 import { isValidString, isValidNumber } from "../utils/validation";
 import { addNewExpense } from "../utils/firestoreHelper";
 import { commonStyles } from "../styles/commonStyles";
-import DropDownPicker from "react-native-dropdown-picker";
+import QuantityDropDownPicker from "../components/QuantityDropDownPicker"; // Import the QuantityDropDownPicker component
 
-const AddExpense = () => {
+const AddExpense = ({ navigation }) => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("1");
+  const [open, setOpen] = useState(false);
 
   const handleSave = async () => {
     if (!isValidString(name)) {
@@ -29,8 +30,8 @@ const AddExpense = () => {
 
     const expense = {
       name,
-      price: parseFloat(price).toFixed(2), // Convert string to number and handle floating point issues
-      quantity: parseInt(quantity, 10), // Convert string to integer
+      price: parseFloat(price).toFixed(2),
+      quantity: parseInt(quantity, 10),
     };
 
     try {
@@ -39,6 +40,7 @@ const AddExpense = () => {
       setName("");
       setPrice("");
       setQuantity("1");
+      setOpen(false);
     } catch (error) {
       Alert.alert("Error", "Failed to add the expense. Please try again.");
     }
@@ -62,20 +64,11 @@ const AddExpense = () => {
         style={styles.input}
       />
       <Text style={styles.label}>Quantity:</Text>
-      {/* Dropdown Picker for Quantity */}
-      <DropDownPicker
-        items={[
-          { label: "1", value: "1" },
-          { label: "2", value: "2" },
-          { label: "3", value: "3" },
-          // Add more options as needed
-        ]}
-        defaultValue={quantity}
-        containerStyle={styles.dropdownContainer}
-        style={styles.dropdown}
-        itemStyle={styles.dropdownItem}
-        dropDownStyle={styles.dropdownList}
-        onChangeItem={(item) => setQuantity(item.value)}
+      <QuantityDropDownPicker
+        quantity={quantity}
+        setQuantity={setQuantity}
+        open={open}
+        setOpen={setOpen}
       />
       <ButtonComponent title="Save" onPress={handleSave} />
     </View>
@@ -93,21 +86,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     marginBottom: 15,
-  },
-  dropdownContainer: {
-    height: 40,
-    marginBottom: 15,
-  },
-  dropdown: {
-    backgroundColor: "white",
-    borderColor: "gray",
-    borderWidth: 1,
-  },
-  dropdownItem: {
-    justifyContent: "flex-start",
-  },
-  dropdownList: {
-    backgroundColor: "white",
   },
 });
 
