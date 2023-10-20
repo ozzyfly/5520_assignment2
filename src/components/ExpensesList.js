@@ -6,9 +6,8 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import { commonStyles } from "../styles/commonStyles";
 
-const ExpensesList = ({ data, navigation }) => {
+const ExpensesList = ({ data, navigation, budgetLimit }) => {
   return (
     <FlatList
       data={data}
@@ -19,7 +18,8 @@ const ExpensesList = ({ data, navigation }) => {
         >
           <Text style={styles.itemText}>{item.name}</Text>
           <Text style={styles.itemPrice}>
-            {item.isOverBudget ? "⚠️" : ""} ${item.price}
+            {item.isOverBudget ? "⚠️" : ""}
+            {item.quantity} x ${item.price}
           </Text>
         </TouchableOpacity>
       )}

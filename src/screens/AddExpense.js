@@ -4,7 +4,7 @@ import ButtonComponent from "../components/ButtonComponent";
 import { isValidString, isValidNumber } from "../utils/validation";
 import { addNewExpense } from "../utils/firestoreHelper";
 import { commonStyles } from "../styles/commonStyles";
-import QuantityDropDownPicker from "../components/QuantityDropDownPicker"; // Import the QuantityDropDownPicker component
+import QuantityDropDownPicker from "../components/QuantityDropDownPicker";
 
 const AddExpense = ({ navigation }) => {
   const [name, setName] = useState("");
@@ -40,10 +40,15 @@ const AddExpense = ({ navigation }) => {
       setName("");
       setPrice("");
       setQuantity("1");
-      setOpen(false);
+      setOpen(false); // Close the dropdown
+      navigation.goBack(); // Navigate back to the previous screen
     } catch (error) {
       Alert.alert("Error", "Failed to add the expense. Please try again.");
     }
+  };
+
+  const handleCancel = () => {
+    navigation.goBack();
   };
 
   return (
@@ -70,7 +75,14 @@ const AddExpense = ({ navigation }) => {
         open={open}
         setOpen={setOpen}
       />
-      <ButtonComponent title="Save" onPress={handleSave} />
+      <View style={styles.buttonContainer}>
+        <ButtonComponent title="Save" onPress={handleSave} />
+        <ButtonComponent
+          title="Cancel"
+          onPress={handleCancel}
+          style={styles.cancelButton}
+        />
+      </View>
     </View>
   );
 };
@@ -86,6 +98,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     marginBottom: 15,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  cancelButton: {
+    backgroundColor: "red", // Customize the cancel button's style
   },
 });
 

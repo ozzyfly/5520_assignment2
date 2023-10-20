@@ -4,7 +4,7 @@ import ButtonComponent from "../components/ButtonComponent";
 import { isValidString, isValidNumber } from "../utils/validation";
 import { updateExpense, deleteExpense } from "../utils/firestoreHelper";
 import { commonStyles } from "../styles/commonStyles";
-import QuantityDropDownPicker from "../components/QuantityDropDownPicker"; // Import the QuantityDropDownPicker component
+import QuantityDropDownPicker from "../components/QuantityDropDownPicker";
 
 const EditExpense = ({ route, navigation }) => {
   const { item, isOverbudget } = route.params;
@@ -35,6 +35,7 @@ const EditExpense = ({ route, navigation }) => {
       name,
       price: Number(price),
       quantity: Number(quantity),
+      isOverbudget: isChecked,
     };
 
     try {
@@ -86,7 +87,7 @@ const EditExpense = ({ route, navigation }) => {
             value={isChecked}
             onValueChange={() => setIsChecked(!isChecked)}
           />
-          <Text>Mark as Overbudget</Text>
+          <Text>Mark as Not Overbudget</Text>
         </View>
       )}
       <ButtonComponent title="Update" onPress={handleSave} />

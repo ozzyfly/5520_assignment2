@@ -22,9 +22,8 @@ const QuantityDropDownPicker = ({ quantity, setQuantity, open, setOpen }) => {
       showArrowIcon={true}
       arrowIconStyle={commonStyles.dropdownArrow}
       open={open}
-      onOpen={() => setOpen(true)}
-      onClose={() => setOpen(false)}
-      controller={(instance) => (controller = instance)} // Add this line to set the controller
+      setOpen={setOpen} // Set the open state using the setOpen prop
+      controller={(instance) => (controller = instance)}
     />
   );
 };

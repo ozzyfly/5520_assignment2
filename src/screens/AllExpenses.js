@@ -7,8 +7,7 @@ import { listenToExpensesUpdates } from "../utils/firestoreHelper";
 
 const AllExpenses = ({ navigation }) => {
   const [expenses, setExpenses] = useState([]);
-
-  const BUDGET_LIMIT = 500; // you can adjust this value based on your needs
+  const BUDGET_LIMIT = 500;
 
   useEffect(() => {
     const unsubscribe = listenToExpensesUpdates(
@@ -34,7 +33,11 @@ const AllExpenses = ({ navigation }) => {
 
   return (
     <View style={commonStyles.container}>
-      <ExpensesList data={expenses} navigation={navigation} />
+      <ExpensesList
+        data={expenses}
+        navigation={navigation}
+        budgetLimit={BUDGET_LIMIT}
+      />
       <ButtonComponent
         title="Add Expense"
         onPress={() => navigation.navigate("AddExpense")}
