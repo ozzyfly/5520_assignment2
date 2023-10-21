@@ -8,6 +8,7 @@ import { listenToExpensesUpdates } from "../utils/firestoreHelper";
 const AllExpenses = ({ navigation }) => {
   const [expenses, setExpenses] = useState([]);
   const BUDGET_LIMIT = 500;
+  const [budgetLimit, setBudgetLimit] = useState(BUDGET_LIMIT);
 
   useEffect(() => {
     const unsubscribe = listenToExpensesUpdates(
@@ -40,7 +41,7 @@ const AllExpenses = ({ navigation }) => {
       <ExpensesList
         data={expenses}
         navigation={navigation}
-        budgetLimit={BUDGET_LIMIT}
+        budgetLimit={budgetLimit}
       />
       <ButtonComponent
         title="Add Expense"

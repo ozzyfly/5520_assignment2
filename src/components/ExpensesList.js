@@ -11,6 +11,7 @@ const ExpensesList = ({ data, navigation, budgetLimit }) => {
             navigation.navigate("EditExpense", {
               item,
               isOverbudget: item.isOverBudget,
+              budgetLimit: budgetLimit,
             })
           }
           style={styles.itemContainer}

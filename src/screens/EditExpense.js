@@ -8,7 +8,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import CheckBox from "expo-checkbox";
 
 const EditExpense = ({ route, navigation }) => {
-  const { item, isOverbudget } = route.params;
+  const { item, isOverbudget, budgetLimit } = route.params;
   const [name, setName] = useState(item.name);
   const [price, setPrice] = useState(String(item.price));
   const [quantity, setQuantity] = useState(String(item.quantity));
@@ -16,7 +16,6 @@ const EditExpense = ({ route, navigation }) => {
   const [open, setOpen] = useState(false);
 
   const handleSave = async () => {
-    // Function to handle the save logic
     Alert.alert(
       "Important!",
       "Are you sure you want to save these changes?",
@@ -43,11 +42,14 @@ const EditExpense = ({ route, navigation }) => {
               return;
             }
 
+            const totalCost = Number(price) * Number(quantity);
+            const isItemOverBudget = totalCost > budgetLimit && !isChecked;
+
             const updatedExpense = {
               name,
               price: Number(price),
               quantity: Number(quantity),
-              isOverBudget: isChecked ? false : item.isOverBudget,
+              isOverBudget: isItemOverBudget,
             };
 
             try {
