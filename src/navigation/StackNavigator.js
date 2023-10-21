@@ -4,7 +4,7 @@ import AllExpenses from "../screens/AllExpenses";
 import OverbudgetExpenses from "../screens/OverbudgetExpenses";
 import AddExpense from "../screens/AddExpense";
 import EditExpense from "../screens/EditExpense";
-import { TouchableOpacity, Text } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 const Stack = createStackNavigator();

@@ -7,7 +7,6 @@ import {
   CheckBox,
   TouchableOpacity,
 } from "react-native";
-import ButtonComponent from "../components/ButtonComponent";
 import { isValidString, isValidNumber } from "../utils/validation";
 import { updateExpense, deleteExpense } from "../utils/firestoreHelper";
 import { commonStyles } from "../styles/commonStyles";
