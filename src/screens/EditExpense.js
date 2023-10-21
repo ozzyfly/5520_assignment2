@@ -47,7 +47,7 @@ const EditExpense = ({ route, navigation }) => {
               name,
               price: Number(price),
               quantity: Number(quantity),
-              isOverbudget: isChecked,
+              isOverBudget: isChecked ? false : item.isOverBudget,
             };
 
             try {

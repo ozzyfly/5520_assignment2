@@ -14,11 +14,15 @@ const AllExpenses = ({ navigation }) => {
       (updatedExpenses) => {
         const computedExpenses = updatedExpenses.map((expense) => {
           const totalCost = expense.quantity * expense.price;
-          return {
-            ...expense,
-            isOverBudget: totalCost > BUDGET_LIMIT,
-          };
+          if (expense.isOverBudget === undefined) {
+            return {
+              ...expense,
+              isOverBudget: totalCost > BUDGET_LIMIT,
+            };
+          }
+          return expense;
         });
+
         setExpenses(computedExpenses);
       },
       (error) => {

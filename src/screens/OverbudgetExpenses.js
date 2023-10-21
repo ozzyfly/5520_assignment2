@@ -16,7 +16,9 @@ const OverbudgetExpenses = ({ navigation }) => {
         const overBudgetExpenses = expensesData
           .filter((expense) => {
             const totalCost = expense.quantity * expense.price;
-            return totalCost > OVERBUDGET_LIMIT;
+            return (
+              totalCost > OVERBUDGET_LIMIT && expense.isOverBudget !== false
+            );
           })
           .map((expense) => ({
             ...expense,
