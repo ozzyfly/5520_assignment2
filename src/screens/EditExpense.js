@@ -68,7 +68,6 @@ const EditExpense = ({ route, navigation }) => {
   const handleDelete = async () => {
     try {
       await deleteExpense(item.id);
-      Alert.alert("Success", "Expense deleted successfully!");
       navigation.goBack();
     } catch (error) {
       Alert.alert("Error", "Failed to delete the expense.");

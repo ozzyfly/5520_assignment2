@@ -37,7 +37,6 @@ const AddExpense = ({ navigation }) => {
 
     try {
       await addNewExpense(expense);
-      Alert.alert("Success", "Expense added successfully!");
       setName("");
       setPrice("");
       setQuantity("1");
