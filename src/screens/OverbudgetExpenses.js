@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { View } from "react-native";
+import { View, Alert } from "react-native";
 import ExpensesList from "../components/ExpensesList";
 import ButtonComponent from "../components/ButtonComponent";
 import { commonStyles } from "../styles/commonStyles";
 import { listenToExpensesUpdates } from "../utils/firestoreHelper";
+
+const OVERBUDGET_LIMIT = 500;
 
 const OverbudgetExpenses = ({ navigation }) => {
   const [expenses, setExpenses] = useState([]);
@@ -12,18 +14,19 @@ const OverbudgetExpenses = ({ navigation }) => {
     const unsubscribe = listenToExpensesUpdates(
       (expensesData) => {
         const overBudgetExpenses = expensesData
-          .filter((expense) => expense.price > 500)
-          .map((expense) => {
+          .filter((expense) => {
             const totalCost = expense.quantity * expense.price;
-            return {
-              ...expense,
-              isOverBudget: totalCost > 500, // Add this line
-            };
-          });
+            return totalCost > OVERBUDGET_LIMIT;
+          })
+          .map((expense) => ({
+            ...expense,
+            isOverBudget: true,
+          }));
         setExpenses(overBudgetExpenses);
       },
       (error) => {
         console.error("Error listening to expense updates:", error);
+        Alert.alert("Error", "Failed to fetch expenses. Please try again.");
       }
     );
 

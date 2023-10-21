@@ -11,6 +11,7 @@
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
     "@firebase/firestore": "^4.3.0",
+    "@react-native-community/checkbox": "^0.5.16",
     "@react-native-firebase/app": "^17.5.0",
     "@react-native-firebase/firestore": "^17.5.0",
     "@react-native-picker/picker": "2.4.10",

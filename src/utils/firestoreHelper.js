@@ -15,7 +15,6 @@ const handleFirestoreError = (error, message) => {
 
 export const addNewExpense = async (expense) => {
   try {
-    // Ensure isOverbudget is not included in the new document
     const { isOverbudget, ...sanitizedExpense } = expense;
     await addDoc(collection(db, "expenses"), sanitizedExpense);
   } catch (error) {

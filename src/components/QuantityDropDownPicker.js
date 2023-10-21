@@ -12,9 +12,11 @@ const QuantityDropDownPicker = ({ quantity, setQuantity, open, setOpen }) => {
     setOpen(false);
   };
 
+  const buttonTitle = quantity ? `Quantity: ${quantity}` : "Select Quantity";
+
   return (
     <>
-      <Button title="Select Quantity" onPress={() => setOpen(true)} />
+      <Button title={buttonTitle} onPress={() => setOpen(true)} />
       <Modal animationType="fade" transparent={true} visible={open}>
         <View style={styles.modalContainer}>
           <View style={styles.dropdown}>
@@ -42,12 +44,12 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     width: 200,
-    maxHeight: 250, // to show only a portion of the list and make it look more like a dropdown
+    maxHeight: 250,
     backgroundColor: "white",
     borderColor: "gray",
     borderWidth: 1,
     borderRadius: 5,
-    elevation: 5, // for Android shadow
+    elevation: 5,
   },
   item: {
     padding: 15,
