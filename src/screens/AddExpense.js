@@ -5,6 +5,7 @@ import { isValidString, isValidNumber } from "../utils/validation";
 import { addNewExpense } from "../utils/firestoreHelper";
 import { commonStyles } from "../styles/commonStyles";
 import QuantityDropDownPicker from "../components/QuantityDropDownPicker";
+import { CommonActions } from "@react-navigation/native";
 
 const AddExpense = ({ navigation }) => {
   const [name, setName] = useState("");
@@ -40,13 +41,25 @@ const AddExpense = ({ navigation }) => {
       setName("");
       setPrice("");
       setQuantity("1");
-      setOpen(false); // Close the dropdown
-      navigation.goBack(); // Navigate back to the previous screen
+      setOpen(false);
+
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [
+            {
+              name: "Home",
+              state: {
+                routes: [{ name: "AllExpenses" }],
+              },
+            },
+          ],
+        })
+      );
     } catch (error) {
       Alert.alert("Error", "Failed to add the expense. Please try again.");
     }
   };
-
   const handleCancel = () => {
     navigation.goBack();
   };

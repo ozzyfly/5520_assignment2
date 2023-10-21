@@ -1,31 +1,59 @@
 import React from "react";
-import DropDownPicker from "react-native-dropdown-picker";
-import { commonStyles } from "../styles/commonStyles";
+import { Modal, Button, FlatList, Text, View, StyleSheet } from "react-native";
 
 const QuantityDropDownPicker = ({ quantity, setQuantity, open, setOpen }) => {
-  const quantityOptions = [];
-  for (let i = 1; i <= 10; i++) {
-    quantityOptions.push({ label: i.toString(), value: i.toString() });
-  }
+  const quantityOptions = Array.from({ length: 10 }, (_, i) => ({
+    label: (i + 1).toString(),
+    value: (i + 1).toString(),
+  }));
+
+  const selectItem = (item) => {
+    setQuantity(item.value);
+    setOpen(false);
+  };
 
   return (
-    <DropDownPicker
-      items={quantityOptions}
-      defaultValue={quantity}
-      containerStyle={commonStyles.dropdownContainer}
-      style={commonStyles.dropdown}
-      itemStyle={commonStyles.dropdownItem}
-      dropDownStyle={commonStyles.dropdownList}
-      onChangeItem={(item) => setQuantity(item.value)}
-      placeholder="Select Quantity"
-      labelStyle={commonStyles.dropdownLabel}
-      showArrowIcon={true}
-      arrowIconStyle={commonStyles.dropdownArrow}
-      open={open}
-      setOpen={setOpen} // Set the open state using the setOpen prop
-      controller={(instance) => (controller = instance)}
-    />
+    <>
+      <Button title="Select Quantity" onPress={() => setOpen(true)} />
+      <Modal animationType="fade" transparent={true} visible={open}>
+        <View style={styles.modalContainer}>
+          <View style={styles.dropdown}>
+            <FlatList
+              data={quantityOptions}
+              renderItem={({ item }) => (
+                <Text onPress={() => selectItem(item)} style={styles.item}>
+                  {item.label}
+                </Text>
+              )}
+              keyExtractor={(item) => item.value}
+            />
+          </View>
+        </View>
+      </Modal>
+    </>
   );
 };
+
+const styles = StyleSheet.create({
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  dropdown: {
+    width: 200,
+    maxHeight: 250, // to show only a portion of the list and make it look more like a dropdown
+    backgroundColor: "white",
+    borderColor: "gray",
+    borderWidth: 1,
+    borderRadius: 5,
+    elevation: 5, // for Android shadow
+  },
+  item: {
+    padding: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: "#f0f0f0",
+  },
+});
 
 export default QuantityDropDownPicker;

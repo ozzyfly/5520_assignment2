@@ -15,7 +15,9 @@ const handleFirestoreError = (error, message) => {
 
 export const addNewExpense = async (expense) => {
   try {
-    await addDoc(collection(db, "expenses"), expense);
+    // Ensure isOverbudget is not included in the new document
+    const { isOverbudget, ...sanitizedExpense } = expense;
+    await addDoc(collection(db, "expenses"), sanitizedExpense);
   } catch (error) {
     handleFirestoreError(error, "Error adding new expense.");
   }
@@ -24,7 +26,9 @@ export const addNewExpense = async (expense) => {
 export const updateExpense = async (id, updatedExpense) => {
   try {
     const expenseRef = doc(db, "expenses", id);
-    await updateDoc(expenseRef, updatedExpense);
+    // Ensure isOverbudget is not included in the update
+    const { isOverbudget, ...sanitizedExpense } = updatedExpense;
+    await updateDoc(expenseRef, sanitizedExpense);
   } catch (error) {
     handleFirestoreError(error, "Error updating the expense.");
   }
