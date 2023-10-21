@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
+import { Text, FlatList, TouchableOpacity, StyleSheet } from "react-native";
 
 const ExpensesList = ({ data, navigation, budgetLimit }) => {
   return (
@@ -37,12 +31,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#ccc",
     backgroundColor: "white",
-    marginVertical: 5,
-    marginHorizontal: 10,
-    borderRadius: 5,
+    marginVertical: 8,
+    borderRadius: 10,
   },
   itemText: {
     fontSize: 18,
+    fontWeight: "bold",
   },
   itemPrice: {
     fontSize: 16,

@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   cancelButton: {
-    backgroundColor: "red", // Customize the cancel button's style
+    backgroundColor: "red",
   },
 });
 

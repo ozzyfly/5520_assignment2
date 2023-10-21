@@ -1,10 +1,18 @@
 import React, { useState } from "react";
-import { View, TextInput, Text, Alert, CheckBox } from "react-native";
+import {
+  View,
+  TextInput,
+  Text,
+  Alert,
+  CheckBox,
+  TouchableOpacity,
+} from "react-native";
 import ButtonComponent from "../components/ButtonComponent";
 import { isValidString, isValidNumber } from "../utils/validation";
 import { updateExpense, deleteExpense } from "../utils/firestoreHelper";
 import { commonStyles } from "../styles/commonStyles";
 import QuantityDropDownPicker from "../components/QuantityDropDownPicker";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const EditExpense = ({ route, navigation }) => {
   const { item, isOverbudget } = route.params;
@@ -59,14 +67,25 @@ const EditExpense = ({ route, navigation }) => {
 
   return (
     <View style={commonStyles.container}>
-      <Text style={commonStyles.label}>Item Name:</Text>
+      <View style={commonStyles.header}>
+        <Text style={commonStyles.headerTitle}>Edit Expense</Text>
+        <TouchableOpacity
+          onPress={handleDelete}
+          style={commonStyles.deleteButton}
+        >
+          <Icon name="trash" size={24} color="#000" />
+        </TouchableOpacity>
+      </View>
+
+      <Text style={commonStyles.label}>Item:</Text>
       <TextInput
         value={name}
         onChangeText={setName}
         placeholder="Enter item name"
         style={commonStyles.input}
       />
-      <Text style={commonStyles.label}>Price:</Text>
+
+      <Text style={commonStyles.label}>Unit Price:</Text>
       <TextInput
         value={price}
         onChangeText={setPrice}
@@ -74,6 +93,7 @@ const EditExpense = ({ route, navigation }) => {
         keyboardType="numeric"
         style={commonStyles.input}
       />
+
       <Text style={commonStyles.label}>Quantity:</Text>
       <QuantityDropDownPicker
         quantity={quantity}
@@ -81,21 +101,31 @@ const EditExpense = ({ route, navigation }) => {
         open={open}
         setOpen={setOpen}
       />
+
       {isOverbudget && (
         <View style={commonStyles.checkboxContainer}>
           <CheckBox
             value={isChecked}
             onValueChange={() => setIsChecked(!isChecked)}
           />
-          <Text>Mark as Not Overbudget</Text>
+          <Text>
+            This item is marked as overbudget. Select the checkbox if you would
+            like to approve it.
+          </Text>
         </View>
       )}
-      <ButtonComponent title="Update" onPress={handleSave} />
-      <ButtonComponent
-        title="Delete"
-        onPress={handleDelete}
-        style={commonStyles.deleteButton}
-      />
+
+      <View style={commonStyles.buttonContainer}>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={commonStyles.cancelButton}
+        >
+          <Text>Cancel</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleSave} style={commonStyles.saveButton}>
+          <Text>Save</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

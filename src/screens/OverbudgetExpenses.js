@@ -11,9 +11,15 @@ const OverbudgetExpenses = ({ navigation }) => {
   useEffect(() => {
     const unsubscribe = listenToExpensesUpdates(
       (expensesData) => {
-        const overBudgetExpenses = expensesData.filter(
-          (expense) => expense.price > 500
-        );
+        const overBudgetExpenses = expensesData
+          .filter((expense) => expense.price > 500)
+          .map((expense) => {
+            const totalCost = expense.quantity * expense.price;
+            return {
+              ...expense,
+              isOverBudget: totalCost > 500, // Add this line
+            };
+          });
         setExpenses(overBudgetExpenses);
       },
       (error) => {
