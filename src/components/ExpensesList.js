@@ -7,7 +7,12 @@ const ExpensesList = ({ data, navigation, budgetLimit }) => {
       data={data}
       renderItem={({ item }) => (
         <TouchableOpacity
-          onPress={() => navigation.navigate("EditExpense", { item })}
+          onPress={() =>
+            navigation.navigate("EditExpense", {
+              item,
+              isOverbudget: item.isOverBudget,
+            })
+          }
           style={styles.itemContainer}
         >
           <Text style={styles.itemText}>{item.name}</Text>
