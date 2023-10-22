@@ -77,18 +77,31 @@ export function OverbudgetStackNavigator() {
       initialRouteName="OverbudgetExpenses"
       screenOptions={{
         headerStyle: {
-          backgroundColor: "#f7f7f7",
+          backgroundColor: "#4a90e2",
         },
-        headerTintColor: "#333",
+        headerTintColor: "#fff",
         headerTitleStyle: {
           fontWeight: "bold",
         },
+        headerTitleAlign: "center",
       }}
     >
       <Stack.Screen
         name="OverbudgetExpenses"
         component={OverbudgetExpenses}
-        options={{ title: "Overbudget Expenses" }}
+        options={({ navigation }) => ({
+          title: "Overbudget Expenses",
+          headerRight: () => (
+            <TouchableOpacity onPress={() => navigation.navigate("AddExpense")}>
+              <Ionicons
+                name="add"
+                size={24}
+                color="#333"
+                style={{ marginRight: 15 }}
+              />
+            </TouchableOpacity>
+          ),
+        })}
       />
     </Stack.Navigator>
   );

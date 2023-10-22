@@ -1,7 +1,6 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import StackNavigator from "./StackNavigator";
-import OverbudgetExpenses from "../screens/OverbudgetExpenses";
+import { StackNavigator, OverbudgetStackNavigator } from "./StackNavigator";
 import { Ionicons } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
@@ -28,7 +27,7 @@ const BottomTabNavigator = () => {
       })}
     >
       <Tab.Screen name="Home" component={StackNavigator} />
-      <Tab.Screen name="Overbudget" component={OverbudgetExpenses} />
+      <Tab.Screen name="Overbudget" component={OverbudgetStackNavigator} />
     </Tab.Navigator>
   );
 };
