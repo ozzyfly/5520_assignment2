@@ -12,7 +12,7 @@ const EditExpense = ({ route, navigation }) => {
   const [name, setName] = useState(item.name);
   const [price, setPrice] = useState(String(item.price));
   const [quantity, setQuantity] = useState(String(item.quantity));
-  const [isChecked, setIsChecked] = useState(isOverbudget);
+  const [isChecked, setIsChecked] = useState(false);
   const [open, setOpen] = useState(false);
 
   const handleSave = async () => {
