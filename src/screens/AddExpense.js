@@ -113,10 +113,11 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
+    marginTop: 20,
   },
   cancelButton: {
-    backgroundColor: "red",
+    backgroundColor: "#4a90e2",
   },
 });
 

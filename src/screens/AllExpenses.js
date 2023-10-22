@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { View } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import ExpensesList from "../components/ExpensesList";
-import ButtonComponent from "../components/ButtonComponent";
 import { commonStyles } from "../styles/commonStyles";
 import { listenToExpensesUpdates } from "../utils/firestoreHelper";
+import { Ionicons } from "@expo/vector-icons";
 
 const AllExpenses = ({ navigation }) => {
   const [expenses, setExpenses] = useState([]);
@@ -43,10 +43,12 @@ const AllExpenses = ({ navigation }) => {
         navigation={navigation}
         budgetLimit={budgetLimit}
       />
-      <ButtonComponent
-        title="Add Expense"
+      <TouchableOpacity
+        style={{ alignSelf: "center", marginTop: 20 }}
         onPress={() => navigation.navigate("AddExpense")}
-      />
+      >
+        <Ionicons name="add-circle-outline" size={50} color="#4a90e2" />
+      </TouchableOpacity>
     </View>
   );
 };

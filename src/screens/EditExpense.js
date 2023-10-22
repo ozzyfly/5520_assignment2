@@ -6,6 +6,7 @@ import { commonStyles } from "../styles/commonStyles";
 import QuantityDropDownPicker from "../components/QuantityDropDownPicker";
 import Icon from "react-native-vector-icons/FontAwesome";
 import CheckBox from "expo-checkbox";
+import ButtonComponent from "../components/ButtonComponent";
 
 const EditExpense = ({ route, navigation }) => {
   const { item, isOverbudget, budgetLimit } = route.params;
@@ -74,17 +75,12 @@ const EditExpense = ({ route, navigation }) => {
     }
   };
 
+  React.useEffect(() => {
+    navigation.setParams({ handleDelete });
+  }, []);
+
   return (
     <View style={commonStyles.container}>
-      <View style={commonStyles.header}>
-        <Text style={commonStyles.headerTitle}>Edit Expense</Text>
-        <TouchableOpacity
-          onPress={handleDelete}
-          style={commonStyles.deleteButton}
-        >
-          <Icon name="trash" size={24} color="#000" />
-        </TouchableOpacity>
-      </View>
       <Text style={commonStyles.label}>Item:</Text>
       <TextInput
         value={name}
@@ -121,15 +117,12 @@ const EditExpense = ({ route, navigation }) => {
         </View>
       )}
       <View style={commonStyles.buttonContainer}>
-        <TouchableOpacity
+        <ButtonComponent
+          title="Cancel"
           onPress={() => navigation.goBack()}
           style={commonStyles.cancelButton}
-        >
-          <Text>Cancel</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleSave} style={commonStyles.saveButton}>
-          <Text>Save</Text>
-        </TouchableOpacity>
+        />
+        <ButtonComponent title="Save" onPress={handleSave} />
       </View>
     </View>
   );

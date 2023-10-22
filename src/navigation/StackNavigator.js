@@ -15,12 +15,13 @@ export function StackNavigator() {
       initialRouteName="AllExpenses"
       screenOptions={{
         headerStyle: {
-          backgroundColor: "#f7f7f7",
+          backgroundColor: "#4a90e2",
         },
-        headerTintColor: "#333",
+        headerTintColor: "#fff",
         headerTitleStyle: {
           fontWeight: "bold",
         },
+        headerTitleAlign: "center",
       }}
     >
       <Stack.Screen
@@ -31,7 +32,7 @@ export function StackNavigator() {
           headerRight: () => (
             <TouchableOpacity onPress={() => navigation.navigate("AddExpense")}>
               <Ionicons
-                name="add-circle-outline"
+                name="add"
                 size={24}
                 color="#333"
                 style={{ marginRight: 15 }}
@@ -48,7 +49,23 @@ export function StackNavigator() {
       <Stack.Screen
         name="EditExpense"
         component={EditExpense}
-        options={{ title: "Edit Expense" }}
+        options={({ navigation, route }) => ({
+          title: "Edit Expense",
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => {
+                route.params.handleDelete();
+              }}
+            >
+              <Ionicons
+                name="trash-bin-outline"
+                size={24}
+                color="#fff"
+                style={{ marginRight: 15 }}
+              />
+            </TouchableOpacity>
+          ),
+        })}
       />
     </Stack.Navigator>
   );
