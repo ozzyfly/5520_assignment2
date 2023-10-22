@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { View, TextInput, Text, Alert, TouchableOpacity } from "react-native";
+import { View, TextInput, Text, Alert } from "react-native";
 import { isValidString, isValidNumber } from "../utils/validation";
 import { updateExpense, deleteExpense } from "../utils/firestoreHelper";
 import { commonStyles } from "../styles/commonStyles";
 import QuantityDropDownPicker from "../components/QuantityDropDownPicker";
-import Icon from "react-native-vector-icons/FontAwesome";
 import CheckBox from "expo-checkbox";
 import ButtonComponent from "../components/ButtonComponent";
 
@@ -108,7 +107,7 @@ const EditExpense = ({ route, navigation }) => {
           <CheckBox
             value={isChecked}
             onValueChange={setIsChecked}
-            color={isChecked ? "#4630eb" : "#ccc"}
+            color={isChecked ? "#3498db" : "#ccc"}
           />
           <Text>
             This item is marked as overbudget. Select the checkbox if you would

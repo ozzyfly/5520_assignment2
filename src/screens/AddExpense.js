@@ -31,7 +31,7 @@ const AddExpense = ({ navigation }) => {
 
     const expense = {
       name,
-      price: parseFloat(price).toFixed(2),
+      price: parseInt(price, 10),
       quantity: parseInt(quantity, 10),
     };
 

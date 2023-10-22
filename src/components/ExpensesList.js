@@ -19,7 +19,7 @@ const ExpensesList = ({ data, navigation, budgetLimit }) => {
           <Text style={styles.itemText}>{item.name}</Text>
           <Text style={styles.itemPrice}>
             {item.isOverBudget ? "⚠️" : ""}
-            {item.quantity} x ${item.price}
+            {item.quantity} * {item.price}
           </Text>
         </TouchableOpacity>
       )}

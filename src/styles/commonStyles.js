@@ -11,8 +11,8 @@ export const commonStyles = StyleSheet.create({
     padding: 12,
     backgroundColor: "#3498db",
     borderRadius: 8,
-    elevation: 3, // Adds shadow for Android
-    shadowOffset: { width: 1, height: 1 }, // For iOS shadow
+    elevation: 3,
+    shadowOffset: { width: 1, height: 1 },
     shadowColor: "#333",
     shadowOpacity: 0.3,
     shadowRadius: 2,
@@ -54,15 +54,5 @@ export const commonStyles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: 20,
-  },
-  cancelButton: {
-    padding: 12,
-    backgroundColor: "#2ecc71",
-    borderRadius: 8,
-  },
-  saveButton: {
-    padding: 12,
-    backgroundColor: "#2ecc71",
-    borderRadius: 8,
   },
 });

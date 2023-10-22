@@ -26,8 +26,16 @@ const BottomTabNavigator = () => {
         tabBarStyle: [{ display: "flex" }, null],
       })}
     >
-      <Tab.Screen name="Home" component={StackNavigator} />
-      <Tab.Screen name="Overbudget" component={OverbudgetStackNavigator} />
+      <Tab.Screen
+        name="Home"
+        component={StackNavigator}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="Overbudget"
+        component={OverbudgetStackNavigator}
+        options={{ headerShown: false }}
+      />
     </Tab.Navigator>
   );
 };
