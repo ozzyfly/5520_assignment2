@@ -49,23 +49,7 @@ export function StackNavigator() {
       <Stack.Screen
         name="EditExpense"
         component={EditExpense}
-        options={({ navigation, route }) => ({
-          title: "Edit Expense",
-          headerRight: () => (
-            <TouchableOpacity
-              onPress={() => {
-                route.params.handleDelete();
-              }}
-            >
-              <Ionicons
-                name="trash-bin-outline"
-                size={24}
-                color="#fff"
-                style={{ marginRight: 15 }}
-              />
-            </TouchableOpacity>
-          ),
-        })}
+        options={{ title: "Edit Expense" }} // Remove the headerRight from here
       />
     </Stack.Navigator>
   );

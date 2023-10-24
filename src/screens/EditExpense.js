@@ -1,13 +1,14 @@
-import React, { useState } from "react";
-import { View, TextInput, Text, Alert } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, TextInput, Text, Alert, TouchableOpacity } from "react-native";
 import { isValidString, isValidNumber } from "../utils/validation";
 import { updateExpense, deleteExpense } from "../utils/firestoreHelper";
 import { commonStyles } from "../styles/commonStyles";
 import QuantityDropDownPicker from "../components/QuantityDropDownPicker";
 import CheckBox from "expo-checkbox";
 import ButtonComponent from "../components/ButtonComponent";
+import { Ionicons } from "@expo/vector-icons";
 
-const EditExpense = ({ route, navigation }) => {
+const EditExpense = ({ navigation, route }) => {
   const { item, isOverbudget, budgetLimit } = route.params;
   const [name, setName] = useState(item.name);
   const [price, setPrice] = useState(String(item.price));
@@ -74,9 +75,20 @@ const EditExpense = ({ route, navigation }) => {
     }
   };
 
-  React.useEffect(() => {
-    navigation.setParams({ handleDelete });
-  }, []);
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity onPress={handleDelete}>
+          <Ionicons
+            name="trash-bin-outline"
+            size={24}
+            color="#fff"
+            style={{ marginRight: 15 }}
+          />
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation, handleDelete]);
 
   return (
     <View style={commonStyles.container}>
